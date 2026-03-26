@@ -1,7 +1,6 @@
-FROM python:3.11-slim
+FROM python:3.11.15-trixie
 
-LABEL description="Microservice Flask pour gérer les environnement" 
-LABEL service="evironnement_service"
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl && apt-get clean
 
 WORKDIR /app
 
