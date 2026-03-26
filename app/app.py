@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import uuid
 import json
 from datetime import datetime, timezone
@@ -12,6 +13,7 @@ def save_env(envs):                                                # Fonction qu
         json.dump(envs, f ,indent=4)
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/environments", methods=["POST"])
 def create_env():
