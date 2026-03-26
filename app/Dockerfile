@@ -9,9 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir data
 
 COPY ./app.py /app
-COPY ../data/users.json /app/data
-COPY ../data/ssid.json /app/data
-COPY ../data/ap.json /app/data
+COPY ../data/env.json /app/data
 
 
 EXPOSE 5002
