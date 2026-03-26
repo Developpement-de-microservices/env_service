@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import requests
 from flask_cors import CORS
 import uuid
 import json
@@ -17,6 +18,15 @@ CORS(app)
 
 @app.route("/environments", methods=["POST"])
 def create_env():
+
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
     
     user_data = request.get_json()
 
@@ -61,11 +71,30 @@ def create_env():
 @app.route("/environments", methods=["GET"])
 def list_env():
 
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
+
     envs = load_env()                                              # On charge le fichier des environnements
     return jsonify(envs), 200
 
 @app.route("/environments/<id>", methods=["GET"])
 def detail_env(id):
+
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
+
     envs = load_env()
 
     env = envs.get(id)
@@ -74,6 +103,15 @@ def detail_env(id):
 
 @app.route("/environments/<id>", methods=["PATCH"])
 def update_env(id):
+
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
 
     user_data = request.get_json()
 
@@ -98,6 +136,15 @@ def update_env(id):
 
 @app.route("/environments/<id>", methods=["DELETE"])
 def del_env(id):
+
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.post("http://proxy/auth/verify", headers=headers)
+        if response.status_code != 200:
+            return jsonify({"error": "Not authorized"}), 401
+    except requests.RequestException:
+        return jsonify({"error": "Unable to check token, check /auth API"}), 401
 
     envs = load_env()
 
