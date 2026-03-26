@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir data
 
 COPY app/app.py .
-COPY ./data/env.json /app/data
+COPY ./data/envs.json /app/data
 
 
 EXPOSE 5002
