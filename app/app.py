@@ -4,11 +4,11 @@ import json
 from datetime import datetime, timezone
 
 def load_env():                                                   # Fonction qui charge les environnements depuis le fichier d'environnements
-    with open("../data/envs.json", "r") as f:
+    with open("./data/envs.json", "r") as f:
         return json.load(f)
     
 def save_env(envs):                                                # Fonction qui sauvegarde les environnements dans le fichier d'environnements
-    with open("../data/envs.json", "w") as f:
+    with open("./data/envs.json", "w") as f:
         json.dump(envs, f ,indent=4)
 
 app = Flask(__name__)
