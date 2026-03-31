@@ -16,6 +16,10 @@ def save_env(envs):                                                # Fonction qu
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/environments/health", methods=["GET"])
+def heath_env():
+    return jsonify({"status": "ok","service": "Environnements","timestamp": "2026-03-31T08:11:20.395Z"}), 200
+
 @app.route("/environments", methods=["POST"])
 def create_env():
 
