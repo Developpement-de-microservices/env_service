@@ -66,7 +66,7 @@ def create_env():
 
     save_env(envs)
 
-    return jsonify(new_env), 200
+    return jsonify(new_env), 201
 
 @app.route("/environments", methods=["GET"])
 def list_env():
@@ -148,7 +148,10 @@ def del_env(id):
 
     envs = load_env()
 
-    del envs[id]
+    if id in envs :
+        del envs[id]
+    else : 
+        return jsonify({"error":"ID introuvable"}), 400
 
     save_env(envs)
 
