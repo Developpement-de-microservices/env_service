@@ -62,7 +62,7 @@ def create_env():
         "description": env_description,
         "url": env_url,
         "active": env_active,
-        "created_at": env_created_at,
+        "createdAt": env_created_at,
         "updatedAt": env_created_at
     }
 
