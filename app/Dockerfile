@@ -16,6 +16,6 @@ COPY ./data/envs.json /app/data
 
 EXPOSE 5002
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:5002/environments || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:5002/environments/health || exit 1
 
 CMD ["python", "app.py"]
