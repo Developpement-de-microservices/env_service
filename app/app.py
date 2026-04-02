@@ -119,9 +119,10 @@ def update_env(id):
         return auth_check
 
     user_data = request.get_json()
-    return user_data
 
     user_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
+
+    return user_data
 
     try:
         env = env_col.find_one({"_id": ObjectId(id)}) #conversion en type mongoDB pour son ID
