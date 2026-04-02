@@ -2,7 +2,7 @@ import os, requests
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import datetime, timezone
-from pymongo import MongoClient
+from pymongo import MongoClient, ReturnDocument
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
@@ -120,23 +120,25 @@ def update_env(id):
 
     user_data = request.get_json()
 
+    user_data.pop("_id", None)  # sécurité
     user_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
 
-    return user_data
-
     try:
-        env = env_col.find_one({"_id": ObjectId(id)}) #conversion en type mongoDB pour son ID
-    except:
-        return jsonify({"message": "Invalid event ID format"}), 400
+        updated_env = env_col.find_one_and_update(
+            {"_id": ObjectId(id)},
+            {"$set": user_data},
+            return_document=ReturnDocument.AFTER
+        )
+    except Exception:
+        return jsonify({"error": "Invalid ID format"}), 400
 
-    if not env:
-        return jsonify({"error":"Aucun environnement correspondant pour cet ID"}), 400
+    if not updated_env:
+        return jsonify({"error": "Aucun environnement correspondant pour cet ID"}), 404
 
-    env_col.update_one({"_id": ObjectId(id)}, {"$set": user_data})
-    env_id = env_col.find_one({"_id": ObjectId(id)})
-    del env_id["_id"]
+    updated_env["id"] = str(updated_env["_id"])
+    del updated_env["_id"]
 
-    return jsonify(env_id), 200
+    return jsonify(updated_env), 200
 
 @app.route("/environments/<id>", methods=["DELETE"])
 def del_env(id):
