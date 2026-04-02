@@ -106,7 +106,7 @@ def detail_env(id):
 
     if env:
         env["id"] = str(env["_id"])
-        #del env["_id"]
+        del env["_id"]
         return jsonify(env), 200
     
     return jsonify({"message": "Environement not found"}), 404
