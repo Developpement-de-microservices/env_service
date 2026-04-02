@@ -65,7 +65,7 @@ def create_env():
 
     result = env_col.insert_one(new_env.copy())
     new_env["id"] = str(result.inserted_id)
-    del new_env["_id"]
+    #del new_env["_id"]
 
     return jsonify(new_env), 201
 
