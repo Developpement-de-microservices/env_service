@@ -65,7 +65,6 @@ def create_env():
 
     result = env_col.insert_one(new_env.copy())
     new_env["id"] = str(result.inserted_id)
-    #del new_env["_id"]
 
     return jsonify(new_env), 201
 
@@ -84,7 +83,7 @@ def list_env():
     envs = []
     for env in env_col.find():
         env["id"] = str(env["_id"]) #transforme en id de l'objet mongo
-        del env["_id"]
+        #del env["_id"]
         envs.append(env)
 
 
@@ -98,13 +97,13 @@ def detail_env(id):
         return auth_check
 
     try:
-        env = env_col.find_one({"_id": ObjectId(id)}) #conversion en type mongoDB pour son ID
+        env = env_col.find_one({"id": ObjectId(id)}) #conversion en type mongoDB pour son ID
     except:
         return jsonify({"message": "Invalid event ID format"}), 400
 
     if env:
         env["id"] = str(env["_id"])
-        del env["_id"]
+        #del env["_id"]
         return jsonify(env), 200
     
     return jsonify({"message": "Event not found"}), 404
