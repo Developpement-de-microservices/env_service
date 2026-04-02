@@ -122,7 +122,10 @@ def update_env(id):
 
     user_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
 
-    env = env_col.find_one({"_id": id})
+    try:
+        env = env_col.find_one({"_id": ObjectId(id)}) #conversion en type mongoDB pour son ID
+    except:
+        return jsonify({"message": "Invalid event ID format"}), 400
 
     if not env:
         return jsonify({"error":"Aucun environnement correspondant pour cet ID"}), 400
@@ -139,7 +142,10 @@ def del_env(id):
     if auth_check: 
         return auth_check
 
-    env = env_col.find_one({"id": id})
+    try:
+        env = env_col.find_one({"_id": ObjectId(id)}) #conversion en type mongoDB pour son ID
+    except:
+        return jsonify({"message": "Invalid event ID format"}), 400
 
     if not env:
         return jsonify({"error":"Aucun environnement correspondant pour cet ID"}), 400
