@@ -87,8 +87,6 @@ def list_env():
         del env["_id"]
         envs.append(env)
 
-    #envs = env_col.find()
-
 
     return jsonify(envs), 200
 
@@ -120,6 +118,9 @@ def update_env(id):
 
     user_data = request.get_json()
 
+    if not user_data:
+        return jsonify({"error": "No data provided"}), 400
+
     user_data.pop("_id", None)  # sécurité
     user_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
 
@@ -127,7 +128,7 @@ def update_env(id):
         updated_env = env_col.find_one_and_update(
             {"_id": ObjectId(id)},
             {"$set": user_data},
-            return_document=ReturnDocument.AFTER
+            return_document=ReturnDocument.AFTER        # Retourne le find après modifications
         )
     except Exception:
         return jsonify({"error": "Invalid ID format"}), 400
@@ -135,7 +136,7 @@ def update_env(id):
     if not updated_env:
         return jsonify({"error": "Aucun environnement correspondant pour cet ID"}), 404
 
-    updated_env["id"] = str(updated_env["_id"])
+    updated_env["id"] = str(updated_env["_id"])         # Ajout de "id" avec la valeur de "_id"
     del updated_env["_id"]
 
     return jsonify(updated_env), 200
