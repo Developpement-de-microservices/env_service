@@ -119,6 +119,7 @@ def update_env(id):
         return auth_check
 
     user_data = request.get_json()
+    return user_data
 
     user_data["updatedAt"] = datetime.now(timezone.utc).isoformat()
 
