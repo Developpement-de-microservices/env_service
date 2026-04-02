@@ -63,8 +63,8 @@ def create_env():
         "updatedAt": env_created_at
     }
 
-    result = env_col.insert_one(new_env.copy())
-    new_env["id"] = str(result.inserted_id)
+    result = env_col.insert_one(new_env)
+    #new_env["id"] = str(result.inserted_id)
 
     return jsonify(new_env), 201
 
