@@ -64,7 +64,8 @@ def create_env():
     }
 
     result = env_col.insert_one(new_env)
-    #new_env["id"] = str(result.inserted_id)
+    new_env["id"] = str(result.inserted_id)
+    del new_env["_id"]
 
     return jsonify(new_env), 201
 
@@ -81,12 +82,12 @@ def list_env():
         return jsonify({"error":"La collection est vide"}), 400 
 
     envs = []
-    #for env in env_col.find():
-        #env["id"] = str(env["_id"]) #transforme en id de l'objet mongo
-        #del env["_id"]
-        #envs.append(env)
+    for env in env_col.find():
+        env["id"] = str(env["_id"]) #transforme en id de l'objet mongo
+        del env["_id"]
+        envs.append(env)
 
-    envs = env_col.find()
+    #envs = env_col.find()
 
 
     return jsonify(envs), 200
