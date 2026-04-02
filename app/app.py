@@ -100,7 +100,7 @@ def detail_env(id):
         return auth_check
 
     try:
-        env = env_col.find_one({"id": ObjectId(id)}) #conversion en type mongoDB pour son ID
+        env = env_col.find_one({"_id": ObjectId(id)}) #conversion en type mongoDB pour son ID
     except:
         return jsonify({"message": "Invalid event ID format"}), 400
 
@@ -109,7 +109,7 @@ def detail_env(id):
         #del env["_id"]
         return jsonify(env), 200
     
-    return jsonify({"message": "Event not found"}), 404
+    return jsonify({"message": "Environement not found"}), 404
 
 @app.route("/environments/<id>", methods=["PATCH"])
 def update_env(id):
