@@ -1,6 +1,9 @@
-FROM python:3.11.15-trixie
+FROM python:3.14-alpine3.23
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl && apt-get clean
+LABEL description="Microservice for the management of environments."
+LABEL service="env_service"
+
+RUN apk add --no-cache curl
 
 WORKDIR /app
 
@@ -8,10 +11,7 @@ COPY /app/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN mkdir data
-
 COPY app/app.py .
-COPY ./data/envs.json /app/data
 
 
 EXPOSE 5002
