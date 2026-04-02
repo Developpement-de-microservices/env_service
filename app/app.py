@@ -130,7 +130,7 @@ def update_env(id):
     if not env:
         return jsonify({"error":"Aucun environnement correspondant pour cet ID"}), 400
 
-    env_col.update_one({"id": id}, {"$set": user_data})
+    env_col.update_one({"_id": ObjectId(id)}, {"$set": user_data})
     env_id = env_col.find_one({"_id": ObjectId(id)})
     del env_id["_id"]
 
