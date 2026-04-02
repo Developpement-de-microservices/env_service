@@ -133,7 +133,7 @@ def update_env(id):
     env_col.update_one({"id": id}, {"$set": user_data})
 
 
-    return jsonify(env_col.find_one({"id": id})), 200
+    return jsonify(env_col.find_one({"_id": ObjectId(id)})), 200
 
 @app.route("/environments/<id>", methods=["DELETE"])
 def del_env(id):
@@ -150,7 +150,7 @@ def del_env(id):
     if not env:
         return jsonify({"error":"Aucun environnement correspondant pour cet ID"}), 400
 
-    env_col.delete_one({"id": id})
+    env_col.delete_one({"_id":  ObjectId(id)})
 
     return jsonify({"success": True,"message": "Ressource supprimée avec succès","id": id}), 200
 
