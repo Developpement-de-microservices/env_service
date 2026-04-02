@@ -79,7 +79,7 @@ def list_env():
     is_empty = env_col.find_one()
 
     if is_empty is None:
-        return jsonify({"error":"La collection est vide"}), 400 
+        return jsonify({"error":"Aucun environnement présent"}), 400 
 
     envs = []
     for env in env_col.find():

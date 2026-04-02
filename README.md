@@ -32,7 +32,7 @@ Il sert principalement à :
 
 ```json
     {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "id": "69ce634e9e3ccbbb39759219",
       "name": "prod-eu-west",
       "type": "production",
       "description": "Environnement de production d'europe de l'ouest",
@@ -47,7 +47,7 @@ Il sert principalement à :
 
 | Champ        | Description                        |
 | ------------ | ---------------------------------- |
-| id           | Identifiant unique (UUID)          |
+| id           | Identifiant unique MongoDB         |
 | name         | Nom de l'environnement             |
 | type         | Type d’environnement               |
 | description  | Description lisible                |
@@ -61,7 +61,8 @@ Il sert principalement à :
 ## Architecture
 
 * Microservice indépendant
-* Communication via REST / JSON
+* Utiliseation d'un conteneur MongoDB pour le stockage des environnements
+* Communication via REST
 * Intégré avec :
 
   * /users
@@ -71,7 +72,7 @@ Il sert principalement à :
 ## Remarques
 
 * Le champ `active` ne peut être que true ou false, soit actif ou nonSS
-* Les identifiants sont générés en UUID
+* Les identifiants sont générés epar MongoDB (conversion des clé primaires en ID)
 * Ce service est conçu pour être utilisé avec un proxy dans l’architecture globale
 
 ---
